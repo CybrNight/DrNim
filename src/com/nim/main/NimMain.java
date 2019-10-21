@@ -20,7 +20,7 @@ public class NimMain implements Runnable{
     private Scanner scanner = new Scanner(System.in);
     private int option;
 
-    private int numMarbles = 13;
+    private int numMarbles = 12;
     private int playerCount = 1;
 
     private NimMain(){
@@ -48,7 +48,6 @@ public class NimMain implements Runnable{
     }
 
     private void tick(){
-
         if (gameState == STATE.Game){
             if (playerCount == 1){
                 System.out.println();
@@ -118,16 +117,19 @@ public class NimMain implements Runnable{
                 currentTurn = TURN.Player1;
                 gameState = STATE.Game;
                 playerCount = 1;
+                numMarbles = 12;
             }else if (option == 2){
                 System.out.println("The goal is to take the last marble from a set of 12.");
                 System.out.println("You make take 1, 2, or 3 marbles on your turn.");
                 System.out.println("After your turn, Dr. Nim will do the same.\n");
-                System.out.println("1:Start 2:Instructions 3:Exit");
             }else if (option == 3){
                 scanner.close();
                 System.exit(1);
             }else{
                 System.out.println("Please Enter a Valid Option");
+                System.out.println("1:Start\n" +
+                                   "2:Instructions\n" +
+                                   "3:Exit");
             }
         }
     }
@@ -148,6 +150,8 @@ public class NimMain implements Runnable{
                            "  ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝\n" +
                            "                                            ");
 
-        System.out.println("1:Start 2:Instructions 3:Exit");
+        System.out.println("1:Start\n" +
+                           "2:Instructions\n" +
+                           "3:Exit");
     }
 }
