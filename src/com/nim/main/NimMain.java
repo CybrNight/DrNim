@@ -135,6 +135,7 @@ public class NimMain implements Runnable{
     }
 
     public void run() {
+        //Simple game loop not ideal
         while (running){
             tick();
         }
