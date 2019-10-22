@@ -24,7 +24,7 @@ public class NimMain implements Runnable{
     private int playerCount = 1;
 
     private NimMain(){
-        displayTitle();
+        printTitle();
         start();
     }
 
@@ -101,7 +101,7 @@ public class NimMain implements Runnable{
                     if (option == 1){
                         option = scanner.nextInt();
                         System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-                        displayTitle();
+                        printTitle();
                         gameState = STATE.Menu;
                     }else{
                         System.exit(1);
@@ -123,36 +123,75 @@ public class NimMain implements Runnable{
                 System.out.println("You make take 1, 2, or 3 marbles on your turn.");
                 System.out.println("After your turn, Dr. Nim will do the same.\n");
             }else if (option == 3){
+                printCredits();
+            }else if (option == 4){
                 scanner.close();
                 System.exit(1);
             }else{
                 System.out.println("Please Enter a Valid Option");
-                System.out.println("1:Start\n" +
-                                   "2:Instructions\n" +
-                                   "3:Exit");
+                printMenu();
             }
         }
     }
 
     public void run() {
-        //Simple game loop not ideal
-        while (running){
-            tick();
+        //Game loop
+        long lastTime = System.nanoTime();
+        double amountOfTicks = 60.0;
+        double ns = 1000000000 / amountOfTicks;
+        double delta = 0;
+        long timer = System.currentTimeMillis();
+        int frames = 0;
+        while (running) {
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            lastTime = now;
+            while (delta >= 1) {
+                tick();
+                delta--;
+            }
+            frames++;
+
+            if (System.currentTimeMillis() - timer > 1000) {
+                timer += 1000;
+                System.out.println(frames);
+                frames = 0;
+            }
         }
+        stop();
     }
 
-    private void displayTitle(){
-        System.out.println("\n");
-        System.out.println("  ██████╗ ██████╗     ███╗   ██╗██╗███╗   ███╗\n" +
-                           "  ██╔══██╗██╔══██╗    ████╗  ██║██║████╗ ████║\n" +
-                           "  ██║  ██║██████╔╝    ██╔██╗ ██║██║██╔████╔██║\n" +
-                           "  ██║  ██║██╔══██╗    ██║╚██╗██║██║██║╚██╔╝██║\n" +
-                           "  ██████╔╝██║  ██║    ██║ ╚████║██║██║ ╚═╝ ██║\n" +
-                           "  ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝\n" +
-                           "                                            ");
+    private void printCredits(){
+        System.out.println("Based on the 1960s game Dr. Nim.\n" +
+                "Written by Nathan Estrada\n" +
+                "You cannot win. Trust me!");
+        printMenu();
+    }
+
+    private void printMenu(){
+        System.out.println("1:Start\n" +
+                "2:Instructions\n" +
+                "3:Credits\n" +
+                "4:Exit\n");
+    }
+
+    private void printTitle(){
+        System.out.println("     ___                                                      \n" +
+                "    (   )                                 .-.                 \n" +
+                "  .-.| |   ___ .-.             ___ .-.   ( __)  ___ .-. .-.   \n" +
+                " /   \\ |  (   )   \\           (   )   \\  (''\") (   )   '   \\  \n" +
+                "|  .-. |   | ' .-. ;           |  .-. .   | |   |  .-.  .-. ; \n" +
+                "| |  | |   |  / (___)          | |  | |   | |   | |  | |  | | \n" +
+                "| |  | |   | |                 | |  | |   | |   | |  | |  | | \n" +
+                "| |  | |   | |                 | |  | |   | |   | |  | |  | | \n" +
+                "| '  | |   | |         .-.     | |  | |   | |   | |  | |  | | \n" +
+                "' `-'  /   | |        (   )    | |  | |   | |   | |  | |  | | \n" +
+                " `.__,'   (___)        `-'    (___)(___) (___) (___)(___)(___)\n" +
+                "                                                              \n");
 
         System.out.println("1:Start\n" +
                            "2:Instructions\n" +
-                           "3:Exit");
+                           "3:Credits\n" +
+                           "4:Exit");
     }
 }
